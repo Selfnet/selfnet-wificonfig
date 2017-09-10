@@ -15,56 +15,14 @@
 
 package tf.nox.wifisetup;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import android.provider.Settings.Secure;
-import android.security.KeyChain;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.UnknownHostException;
-
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.Security;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-/* import android.util.Base64; */
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import tf.nox.wifisetup.R;
-
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiEnterpriseConfig;
+import android.net.wifi.WifiEnterpriseConfig.Eap;
 import android.net.wifi.WifiEnterpriseConfig.Phase2;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -75,16 +33,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.CheckBox;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import java.io.InputStream;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.List;
+
+/* import android.util.Base64; */
 // API level 18 and up
-import android.net.wifi.WifiEnterpriseConfig;
-import android.net.wifi.WifiEnterpriseConfig.Eap;
 
 public class WifiSetup extends Activity {
     // FIXME This should be a configuration setting somehow
@@ -114,7 +77,6 @@ public class WifiSetup extends Activity {
     private Handler mHandler = new Handler();
     private EditText username;
     private EditText password;
-    private CheckBox check5g;
     private Button btn;
     private String subject_match;
     private String altsubject_match;
@@ -166,10 +128,6 @@ public class WifiSetup extends Activity {
                 if (logoclicks == 6) {
                     toastText("Stop that!");
                 }
-                if (logoclicks == 7) {
-                    View logindata = findViewById(R.id.logindata);
-                    logindata.setVisibility(View.VISIBLE);
-                }
             }
         });
 
@@ -191,7 +149,7 @@ public class WifiSetup extends Activity {
                         try {
                             if (android.os.Build.VERSION.SDK_INT >= 18) {
                                 saveWifiConfig();
-                                resultStatus(true, "You should now have a wifi connection entry with correct security settings and certificate verification.\n\nMake sure to actually use it!");
+                                resultStatus(true, "You should now have a wifi connection entry with correct security settings and certificate verification. \n\nIf you are facing problems to connect to the WiFi check whether you provided the correct credentials.\nThis message only confirms that the profile has been created it doesn't validate you username and password.");
                                 // Clear the password field in the UI thread
                                 /*
                                 mHandler.post(new Runnable() {
@@ -251,7 +209,7 @@ public class WifiSetup extends Activity {
         s_username = username.getText().toString();
         s_password = password.getText().toString();
         realm = "";
-        if (s_username.equals("") && s_password.equals("")) {
+        if (s_username.equals("") || s_password.equals("")) {
             resultStatus(false, "Please provide your WiFi credentials from MySelfnet.");
         }
 
@@ -368,6 +326,14 @@ public class WifiSetup extends Activity {
                         "\n\n" + pi.packageName + "\n" +
                         "V" + pi.versionName +
                         "C" + pi.versionCode + "-equi");
+                builder.setPositiveButton(getString(android.R.string.ok), null);
+                builder.show();
+
+                return true;
+            case R.id.help:
+                builder.setTitle(R.string.HELP_TITLE);
+                builder.setMessage(R.string.HELP_TEXT);
+
                 builder.setPositiveButton(getString(android.R.string.ok), null);
                 builder.show();
 
