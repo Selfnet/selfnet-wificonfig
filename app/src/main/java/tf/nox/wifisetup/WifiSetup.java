@@ -19,7 +19,9 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.net.Uri;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiEnterpriseConfig.Eap;
@@ -33,7 +35,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -78,6 +79,7 @@ public class WifiSetup extends Activity {
     private EditText username;
     private EditText password;
     private Button btn;
+    private Button qrScan;
     private String subject_match;
     private String altsubject_match;
 
@@ -130,6 +132,34 @@ public class WifiSetup extends Activity {
                 }
             }
         });
+
+        qrScan = (Button) findViewById(R.id.qrScan);
+        if (qrScan == null)
+            throw new RuntimeException("button1 not found. Odd");
+        qrScan.setOnClickListener(new Button.OnClickListener() {
+                                      public void onClick(View _v) {
+                                          if (busy) {
+                                              return;
+                                          }
+                                          busy = true;
+                                          _v.setClickable(false);
+
+                                          try {
+                                              Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                                              intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE for bar codes
+
+                                              startActivityForResult(intent, 0);
+
+                                          } catch (Exception e) {
+
+                                              Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
+                                              Intent marketIntent = new Intent(Intent.ACTION_VIEW,marketUri);
+                                              startActivity(marketIntent);
+
+                                          }
+
+                                      }
+                                  });
 
         btn = (Button) findViewById(R.id.button1);
         if (btn == null)
@@ -211,6 +241,7 @@ public class WifiSetup extends Activity {
         realm = "";
         if (s_username.equals("") || s_password.equals("")) {
             resultStatus(false, "Please provide your WiFi credentials from MySelfnet.");
+            return;
         }
 
 
@@ -300,6 +331,23 @@ public class WifiSetup extends Activity {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+
+            if (resultCode == RESULT_OK) {
+                String contents = data.getStringExtra("SCAN_RESULT");
+                String[] credentials = contents.split(":");
+                username.setText(credentials[0]);
+                password.setText(credentials[1]);
+            }
+            if(resultCode == RESULT_CANCELED){
+                toastText("Failed!");
+            }
         }
     }
 
