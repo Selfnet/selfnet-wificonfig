@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Selfnet Wifi Setup</string>
+	<string name="app_name">Selfnet WLAN Setup</string>
 
-	<string name="TITLE_LOGON">Please provide your WiFi credentials from MySelfnet</string>
+	<string name="TITLE_LOGON">Please provide your MySelfnet credentials</string>
 	<string name="myselfnet">https://my.selfnet.de</string>
 	<string name="Username">your@email.com</string>
-	<string name="Password">password</string>
+	<string name="Password">MySelfnet Password</string>
 	<string name="Logon">Create connection entry</string>
 	<string name="qrScan">Scan QRCode</string>
 
@@ -18,7 +18,7 @@
 	<string name="EXIT_TITLE">Exit</string>
 	<string name="HELP_TITLE">Help</string>
 		
-	<string name="ABOUT_CONTENT">This small helper app creates a Wifi connection entry for the Selfnet WiFi network.  It configures the correct SSL CA and subject name match, making it a little more secure than a hand-created entry.</string>
-	<string name="HELP_TEXT">If you face any problems connecting to the WiFi please check whether you type in the WiFi password, not that one for MySelfnet, correctly.\nIf this doesn\'t help contact <a href="mailto:support@selfnet.dem">support@selfnet.de</a>.</string>
+	<string name="ABOUT_CONTENT">This small helper app creates a wlan connection entry for the Selfnet WLAN network.  It configures the correct SSL CA and subject name match, making it a little more secure than a hand-created entry.</string>
+	<string name="HELP_TEXT">If you face any problems connecting to the WLAN please check whether you typed in your password and email address correctly.\nIf this doesn\'t help contact <a href="mailto:support@selfnet.dem">support@selfnet.de</a>.</string>
 	<string name="LOGO">Selfnet Logo</string>
 </resources>

@@ -137,7 +137,7 @@ public class WifiSetup extends Activity {
         if (qrScan == null)
             throw new RuntimeException("button1 not found. Odd");
         qrScan.setOnClickListener(new Button.OnClickListener() {
-                                      public void onClick(View _v) {
+                                     public void onClick(View _v) {
                                           if (busy) {
                                               return;
                                           }
@@ -155,9 +155,7 @@ public class WifiSetup extends Activity {
                                               Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
                                               Intent marketIntent = new Intent(Intent.ACTION_VIEW,marketUri);
                                               startActivity(marketIntent);
-
                                           }
-
                                       }
                                   });
 
@@ -169,6 +167,13 @@ public class WifiSetup extends Activity {
                 if (busy) {
                     return;
                 }
+
+                // Reject trailing whitespaces
+                if (username.getText().toString().endsWith(" ")) {
+                    toastText("Email-Address ends with whitespace - Please change that");
+                    return;
+                }
+
                 busy = true;
                 _v.setClickable(false);
 
@@ -291,8 +296,8 @@ public class WifiSetup extends Activity {
         configMap.put(INT_ANONYMOUS_IDENTITY, "anonymous" + realm);
         configMap.put(INT_IDENTITY, s_username);
         configMap.put(INT_PASSWORD, s_password);
-        configMap.put(INT_EAP, "PEAP");
-        configMap.put(INT_PHASE2, "auth=MSCHAPv2");
+        configMap.put(INT_EAP, "TTLS");
+        configMap.put(INT_PHASE2, "auth=PAP");
         configMap.put(INT_ENGINE, "0");
         // configMap.put(INT_CA_CERT, INT_CA_PREFIX + ca_name);
 
@@ -319,9 +324,9 @@ public class WifiSetup extends Activity {
             X509Certificate caCert = (X509Certificate) certFactory.generateCertificate(in);
 
             WifiEnterpriseConfig enterpriseConfig = new WifiEnterpriseConfig();
-            enterpriseConfig.setPhase2Method(Phase2.MSCHAPV2);
+            enterpriseConfig.setPhase2Method(Phase2.PAP);
             enterpriseConfig.setAnonymousIdentity(configMap.get(INT_ANONYMOUS_IDENTITY));
-            enterpriseConfig.setEapMethod(Eap.PEAP);
+            enterpriseConfig.setEapMethod(Eap.TTLS);
 
             enterpriseConfig.setCaCertificate(caCert);
             enterpriseConfig.setIdentity(s_username);

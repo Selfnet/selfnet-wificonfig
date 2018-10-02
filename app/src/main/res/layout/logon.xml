@@ -79,7 +79,8 @@
 			android:layout_margin="10dp"
 			android:layout_marginTop="20dp"
 			android:background="#ff5a17"
-			android:text="@string/qrScan" />
+			android:text="@string/qrScan"
+			android:visibility="invisible" />
 
 		<EditText
 			android:id="@+id/username"
