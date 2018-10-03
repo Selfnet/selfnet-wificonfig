@@ -19,6 +19,6 @@
 	<string name="HELP_TITLE">Help</string>
 		
 	<string name="ABOUT_CONTENT">This small helper app creates a wlan connection entry for the Selfnet WLAN network.  It configures the correct SSL CA and subject name match, making it a little more secure than a hand-created entry.</string>
-	<string name="HELP_TEXT">If you face any problems connecting to the WLAN please check whether you typed in your password and email address correctly.\nIf this doesn\'t help contact <a href="mailto:support@selfnet.dem">support@selfnet.de</a>.</string>
+	<string name="HELP_TEXT">If you face any issues connecting to the WLAN please check whether you typed in your password and email address correctly.\nIf this doesn\'t help contact <a href="mailto:support@selfnet.dem">support@selfnet.de</a>.</string>
 	<string name="LOGO">Selfnet Logo</string>
 </resources>

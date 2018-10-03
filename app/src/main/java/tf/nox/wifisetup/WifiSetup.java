@@ -64,7 +64,7 @@ public class WifiSetup extends Activity {
     private static final String INT_ALTSUBJECT_MATCH = "altsubject_match";
     private static final String INT_PASSWORD = "password";
     private static final String INT_IDENTITY = "identity";
-    private static final String INT_ANONYMOUS_IDENTITY = "anonymous_identity";
+    private static final String INT_ANONYMOUS_IDENTITY = "anonymous@email.service";
     private static final String INT_ENTERPRISEFIELD_NAME = "android.net.wifi.WifiConfiguration$EnterpriseField";
 
     // Because android.security.Credentials cannot be resolved...
@@ -83,7 +83,7 @@ public class WifiSetup extends Activity {
     private String subject_match;
     private String altsubject_match;
 
-    private String realm;
+    private String realm = "@email.space";
     private String ssid;
     private boolean busy = false;
     private Toast toast = null;
@@ -238,7 +238,7 @@ public class WifiSetup extends Activity {
         }
 
         ssid = "Selfnet";
-        subject_match = "/CN=radius-user.selfnet.de";
+        subject_match = "/CN=radius-user-2.server.selfnet.de";
         altsubject_match = "DNS:radius-user.selfnet.de";
 
         s_username = username.getText().toString();
@@ -289,17 +289,18 @@ public class WifiSetup extends Activity {
         currentConfig.allowedProtocols.clear();
         currentConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
 
+
         // Enterprise Settings
-        HashMap<String, String> configMap = new HashMap<String, String>();
-        configMap.put(INT_SUBJECT_MATCH, subject_match);
+        HashMap<String, String> configMap = new HashMap<>();
+        // configMap.put(INT_SUBJECT_MATCH, subject_match);
         configMap.put(INT_ALTSUBJECT_MATCH, altsubject_match);
-        configMap.put(INT_ANONYMOUS_IDENTITY, "anonymous" + realm);
+        configMap.put(INT_ANONYMOUS_IDENTITY, "anonymous@email.service");
         configMap.put(INT_IDENTITY, s_username);
         configMap.put(INT_PASSWORD, s_password);
         configMap.put(INT_EAP, "TTLS");
         configMap.put(INT_PHASE2, "auth=PAP");
         configMap.put(INT_ENGINE, "0");
-        // configMap.put(INT_CA_CERT, INT_CA_PREFIX + ca_name);
+        configMap.put(INT_CA_CERT, INT_CA_PREFIX);
 
         applyAndroid43EnterpriseSettings(currentConfig, configMap);
 
@@ -311,11 +312,10 @@ public class WifiSetup extends Activity {
             wifiManager.enableNetwork(currentConfig.networkId, false);
         }
         wifiManager.saveConfiguration();
-
     }
 
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    @TargetApi(Build.VERSION_CODES.M)
     private void applyAndroid43EnterpriseSettings(WifiConfiguration currentConfig, HashMap<String, String> configMap) {
         try {
             CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
@@ -331,7 +331,8 @@ public class WifiSetup extends Activity {
             enterpriseConfig.setCaCertificate(caCert);
             enterpriseConfig.setIdentity(s_username);
             enterpriseConfig.setPassword(s_password);
-            enterpriseConfig.setSubjectMatch(configMap.get(INT_SUBJECT_MATCH));
+            enterpriseConfig.setAltSubjectMatch(configMap.get(INT_ALTSUBJECT_MATCH));
+            // enterpriseConfig.setSubjectMatch(configMap.get(INT_SUBJECT_MATCH));
             currentConfig.enterpriseConfig = enterpriseConfig;
 
         } catch (Exception e) {
@@ -419,8 +420,6 @@ public class WifiSetup extends Activity {
                 toast.show(); */
                 flipper.showNext();
             }
-
-            ;
         });
     }
 
