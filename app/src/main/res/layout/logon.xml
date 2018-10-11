@@ -72,16 +72,6 @@
 			android:autoLink="web"
 			android:text="@string/myselfnet" />
 
-		<Button
-			android:id="@+id/qrScan"
-			android:layout_width="196dp"
-			android:layout_height="25dp"
-			android:layout_margin="10dp"
-			android:layout_marginTop="20dp"
-			android:background="#ff5a17"
-			android:text="@string/qrScan"
-			android:visibility="invisible" />
-
 		<EditText
 			android:id="@+id/username"
 			android:layout_width="wrap_content"
