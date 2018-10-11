@@ -118,6 +118,7 @@ public class WifiSetup extends Activity {
         flipper = (ViewFlipper) findViewById(R.id.viewflipper);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
+        btn = (Button) findViewById(R.id.button1);
 
         ImageView img = (ImageView) findViewById(R.id.logo);
         img.setOnClickListener(new View.OnClickListener() {
@@ -132,34 +133,31 @@ public class WifiSetup extends Activity {
                 }
             }
         });
+    }
 
-        btn = (Button) findViewById(R.id.button1);
-        if (btn == null)
-            throw new RuntimeException("button1 not found. Odd");
-        btn.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View _v) {
-                if (busy) {
-                    return;
-                }
+    public void createConnectionEntryClick(View _v) {
+        if (busy) {
+            return;
+        }
 
-                // Reject trailing whitespaces
-                if (username.getText().toString().endsWith(" ")) {
-                    toastText("Email-Address ends with whitespace - Please change that");
-                    return;
-                }
+        // Reject trailing whitespaces
+        if (username.getText().toString().endsWith(" ")) {
+            toastText("Email-Address ends with whitespace - Please change that");
+            return;
+        }
 
-                busy = true;
-                _v.setClickable(false);
+        busy = true;
+        btn.setClickable(false);
 
-                // Most of this stuff runs in the background
-                Thread t = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            if (android.os.Build.VERSION.SDK_INT >= 18) {
-                                saveWifiConfig();
-                                resultStatus(true, "You should now have a wifi connection entry with correct security settings and certificate verification. \n\nIf you are facing problems to connect to the WiFi check whether you provided the correct credentials.\nThis message only confirms that the profile has been created it doesn't validate you username and password.");
-                                // Clear the password field in the UI thread
+        // Most of this stuff runs in the background
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    if (android.os.Build.VERSION.SDK_INT >= 18) {
+                        saveWifiConfig();
+                        resultStatus(true, "You should now have a wifi connection entry with correct security settings and certificate verification. \n\nIf you are facing problems to connect to the WiFi check whether you provided the correct credentials.\nThis message only confirms that the profile has been created it doesn't validate you username and password.");
+                        // Clear the password field in the UI thread
                                 /*
                                 mHandler.post(new Runnable() {
 									@Override
@@ -168,31 +166,27 @@ public class WifiSetup extends Activity {
 									};
 								});
 								*/
-                            } else {
-                                throw new RuntimeException("What version is this?! API Mismatch");
-                            }
-                        } catch (RuntimeException e) {
-                            resultStatus(false, "Something went wrong: " + e.getMessage());
-                            e.printStackTrace();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        busy = false;
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                btn.setClickable(true);
-                            }
-
-                            ;
-                        });
+                    } else {
+                        throw new RuntimeException("What version is this?! API Mismatch");
                     }
-                };
-                t.start();
+                } catch (RuntimeException e) {
+                    resultStatus(false, "Something went wrong: " + e.getMessage());
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                busy = false;
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        btn.setClickable(true);
+                    }
 
+                    ;
+                });
             }
-        });
-
+        };
+        t.start();
     }
 
     private void saveWifiConfig() {

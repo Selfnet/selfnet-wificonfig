@@ -2,7 +2,6 @@
 <ViewFlipper
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	tools:context=".WiFiEduroam"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:id="@+id/viewflipper"
@@ -103,6 +102,7 @@
 		android:layout_margin="15dp"
 		android:layout_weight="0.15"
 		android:background="#ff5a17"
+		android:onClick="createConnectionEntryClick"
 		android:text="@string/Logon" />
 
 	<Space
@@ -115,7 +115,7 @@
 		<LinearLayout
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-			android:id="@+id/logonLayout"
+			android:id="@+id/result_layout"
 			android:orientation="vertical"
 			android:gravity="center"
 			>
@@ -125,7 +125,7 @@
 				android:layout_height="wrap_content"
 				android:layout_margin="15dp"
 				android:textAlignment="center"
-				android:textSize="24dp"
+				android:textSize="24sp"
 				/>
 			<TextView
 				android:id="@+id/result"
