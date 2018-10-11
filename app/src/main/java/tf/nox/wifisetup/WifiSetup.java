@@ -113,7 +113,7 @@ public class WifiSetup extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.logon);
+        setContentView(R.layout.view_holder);
 
         flipper = (ViewFlipper) findViewById(R.id.viewflipper);
         username = (EditText) findViewById(R.id.username);
