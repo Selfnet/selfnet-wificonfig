@@ -19,9 +19,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.net.Uri;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiEnterpriseConfig.Eap;
@@ -92,6 +90,11 @@ public class WifiSetup extends Activity {
     private String s_password;
     private ViewFlipper flipper;
 
+    /**
+     * Creates a toast for the given text.
+     * If a toast is currently shown it gets replaced by this toast.
+     * @param text The text content of the toast
+     */
     private void toastText(final String text) {
         if (toast != null)
             toast.cancel();
@@ -109,7 +112,10 @@ public class WifiSetup extends Activity {
 	}
 	*/
 
-    // Called when the activity is first created.
+    /**
+     * Called when the activity is created.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +127,7 @@ public class WifiSetup extends Activity {
         btn = (Button) findViewById(R.id.button1);
 
         ImageView img = (ImageView) findViewById(R.id.logo);
+        //Easter egg for clicking on the logo
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,6 +142,10 @@ public class WifiSetup extends Activity {
         });
     }
 
+    /**
+     * Gets called by the button to create the connection entry
+     * @param _v the calling view
+     */
     public void createConnectionEntryClick(View _v) {
         if (busy) {
             return;
@@ -189,6 +200,9 @@ public class WifiSetup extends Activity {
         t.start();
     }
 
+    /**
+     * Sets the wifi config
+     */
     private void saveWifiConfig() {
         WifiManager wifiManager = (WifiManager) this.getSystemService(WIFI_SERVICE);
         wifiManager.setWifiEnabled(true);
@@ -308,6 +322,11 @@ public class WifiSetup extends Activity {
         }
     }
 
+    /**
+     * Related to the menu on the top right corner
+     * @param menu the menu of this activity
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -315,6 +334,12 @@ public class WifiSetup extends Activity {
         return true;
     }
 
+    /**
+     * Gets called when there an options menu item is clicked.
+     * Will take the according actions
+     * @param item
+     * @return true if the event was processed by this function
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Builder builder = new AlertDialog.Builder(this);
@@ -349,8 +374,11 @@ public class WifiSetup extends Activity {
         return false;
     }
 
-
-    /* Update the status in the main thread */
+    /**
+     * Switches to the result screen displaying the given text
+     * @param success
+     * @param text
+     */
     protected void resultStatus(final boolean success, final String text) {
         mHandler.post(new Runnable() {
             @Override
@@ -374,6 +402,11 @@ public class WifiSetup extends Activity {
         });
     }
 
+    /**
+     * removes the quotes from the given string if present
+     * @param str
+     * @return
+     */
     static String removeQuotes(String str) {
         int len = str.length();
         if ((len > 1) && (str.charAt(0) == '"') && (str.charAt(len - 1) == '"')) {
@@ -382,6 +415,11 @@ public class WifiSetup extends Activity {
         return str;
     }
 
+    /**
+     * Surrounds the given string with quotes
+     * @param string
+     * @return
+     */
     static String surroundWithQuotes(String string) {
         return "\"" + string + "\"";
     }
