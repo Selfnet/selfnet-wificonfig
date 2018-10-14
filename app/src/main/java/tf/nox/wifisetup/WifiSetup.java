@@ -165,21 +165,8 @@ public class WifiSetup extends Activity {
             @Override
             public void run() {
                 try {
-                    if (android.os.Build.VERSION.SDK_INT >= 18) {
-                        saveWifiConfig();
-                        resultStatus(true, "You should now have a wifi connection entry with correct security settings and certificate verification. \n\nIf you are facing problems to connect to the WiFi check whether you provided the correct credentials.\nThis message only confirms that the profile has been created it doesn't validate you username and password.");
-                        // Clear the password field in the UI thread
-                                /*
-                                mHandler.post(new Runnable() {
-									@Override
-									public void run() {
-										password.setText("");
-									};
-								});
-								*/
-                    } else {
-                        throw new RuntimeException("What version is this?! API Mismatch");
-                    }
+                    saveWifiConfig();
+                    resultStatus(true, "You should now have a wifi connection entry with correct security settings and certificate verification. \n\nIf you are facing problems to connect to the WiFi check whether you provided the correct credentials.\nThis message only confirms that the profile has been created it doesn't validate you username and password.");
                 } catch (RuntimeException e) {
                     resultStatus(false, "Something went wrong: " + e.getMessage());
                     e.printStackTrace();
