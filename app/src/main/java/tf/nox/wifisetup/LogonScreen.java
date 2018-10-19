@@ -48,7 +48,7 @@ import java.util.List;
 /* import android.util.Base64; */
 // API level 18 and up
 
-public class WifiSetup extends Activity {
+public class LogonScreen extends Activity {
     // FIXME This should be a configuration setting somehow
     private static final String INT_EAP = "eap";
     private static final String INT_PHASE2 = "phase2";
