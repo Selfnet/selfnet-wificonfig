@@ -12,8 +12,7 @@
     android:id="@+id/logonLayout"
     android:orientation="vertical"
     android:gravity="center_horizontal|top"
-    android:weightSum="1"
-    tools:showIn="@layout/view_holder">
+    android:weightSum="1">
 
     <ImageView
         android:id="@+id/logo"

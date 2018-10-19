@@ -19,6 +19,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiEnterpriseConfig;
@@ -88,7 +89,6 @@ public class LogonScreen extends Activity {
     private int logoclicks = 0;
     private String s_username;
     private String s_password;
-    private ViewFlipper flipper;
 
     /**
      * Creates a toast for the given text.
@@ -119,9 +119,8 @@ public class LogonScreen extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_holder);
+        setContentView(R.layout.logon_screen);
 
-        flipper = (ViewFlipper) findViewById(R.id.viewflipper);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         btn = (Button) findViewById(R.id.button1);
@@ -367,26 +366,11 @@ public class LogonScreen extends Activity {
      * @param text
      */
     protected void resultStatus(final boolean success, final String text) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                TextView res_title = (TextView) findViewById(R.id.resulttitle);
-                TextView res_text = (TextView) findViewById(R.id.result);
-
-                System.out.println(text);
-                res_text.setText(text);
-                if (success)
-                    res_title.setText("Success!");
-                else
-                    res_title.setText("ERROR!");
-
-                if (toast != null)
-                    toast.cancel();
-                /* toast = Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG);
-                toast.show(); */
-                flipper.showNext();
-            }
-        });
+        Intent intent = new Intent(this, ResultScreen.class);
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.putExtra(ResultScreen.TITLE, success?"Success!":"ERROR!");
+        intent.putExtra(ResultScreen.DESC, text);
+        startActivity(intent);
     }
 
     /**
