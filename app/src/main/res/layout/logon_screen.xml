@@ -96,6 +96,8 @@
         android:layout_margin="15dp"
         android:layout_weight="0.15"
         android:background="#ff5a17"
+        android:textColor="#ffffff"
+        android:padding="10dp"
         android:onClick="createConnectionEntryClick"
         android:text="@string/Logon" />
 
