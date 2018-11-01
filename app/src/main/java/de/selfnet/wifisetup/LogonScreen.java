@@ -13,7 +13,7 @@
  *  limitations under the License.
  */
 
-package tf.nox.wifisetup;
+package de.selfnet.wifisetup;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -36,9 +36,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import java.io.InputStream;
 import java.security.cert.CertificateFactory;

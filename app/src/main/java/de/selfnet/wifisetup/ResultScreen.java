@@ -1,4 +1,4 @@
-package tf.nox.wifisetup;
+package de.selfnet.wifisetup;
 
 import android.app.Activity;
 import android.content.Intent;
