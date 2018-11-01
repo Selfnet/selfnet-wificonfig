@@ -63,6 +63,7 @@ public class LogonScreen extends Activity {
     private static final String INT_IDENTITY = "identity";
     private static final String INT_ANONYMOUS_IDENTITY = "anonymous@email.service";
     private static final String INT_ENTERPRISEFIELD_NAME = "android.net.wifi.WifiConfiguration$EnterpriseField";
+    private static final String INT_DOMAIN_SUFFIX_MATCH = "domain.suffix.match";
 
     // Because android.security.Credentials cannot be resolved...
     private static final String INT_KEYSTORE_URI = "keystore://";
@@ -77,8 +78,6 @@ public class LogonScreen extends Activity {
     private EditText password;
     private Button btn;
     private Button qrScan;
-    private String subject_match;
-    private String altsubject_match;
 
     private String realm = "@email.space";
     private String ssid;
@@ -204,8 +203,9 @@ public class LogonScreen extends Activity {
         }
 
         ssid = "Selfnet";
-        subject_match = "/CN=radius-user-2.server.selfnet.de";
-        altsubject_match = "DNS:radius-user.selfnet.de";
+        String subject_match = "/CN=radius-user-2.server.selfnet.de";
+        String altsubject_match = "DNS:radius-user.selfnet.de";
+        String domain_suffix_match = "radius-user.selfnet.de";
 
         s_username = username.getText().toString();
         s_password = password.getText().toString();
@@ -267,6 +267,7 @@ public class LogonScreen extends Activity {
         configMap.put(INT_PHASE2, "auth=PAP");
         configMap.put(INT_ENGINE, "0");
         configMap.put(INT_CA_CERT, INT_CA_PREFIX);
+        configMap.put(INT_DOMAIN_SUFFIX_MATCH, domain_suffix_match);
 
         applyAndroid43EnterpriseSettings(currentConfig, configMap);
 
@@ -298,7 +299,7 @@ public class LogonScreen extends Activity {
             enterpriseConfig.setIdentity(s_username);
             enterpriseConfig.setPassword(s_password);
             enterpriseConfig.setAltSubjectMatch(configMap.get(INT_ALTSUBJECT_MATCH));
-            // enterpriseConfig.setSubjectMatch(configMap.get(INT_SUBJECT_MATCH));
+            enterpriseConfig.setDomainSuffixMatch(configMap.get(INT_DOMAIN_SUFFIX_MATCH));
             currentConfig.enterpriseConfig = enterpriseConfig;
 
         } catch (Exception e) {
