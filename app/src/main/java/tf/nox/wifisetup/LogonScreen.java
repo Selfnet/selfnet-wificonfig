@@ -152,7 +152,7 @@ public class LogonScreen extends Activity {
 
         // Reject trailing whitespaces
         if (username.getText().toString().endsWith(" ")) {
-            toastText("Email-Address ends with whitespace - Please change that");
+            toastText(getString(R.string.email_ends_with_whitespace));
             return;
         }
 
@@ -165,9 +165,9 @@ public class LogonScreen extends Activity {
             public void run() {
                 try {
                     saveWifiConfig();
-                    resultStatus(true, "You should now have a wifi connection entry with correct security settings and certificate verification. \n\nIf you are facing problems to connect to the WiFi check whether you provided the correct credentials.\nThis message only confirms that the profile has been created it doesn't validate you username and password.");
+                    resultStatus(true, getString(R.string.success_explain_text));
                 } catch (RuntimeException e) {
-                    resultStatus(false, "Something went wrong: " + e.getMessage());
+                    resultStatus(false, String.format(getString(R.string.error_explain_text), e.getMessage()));
                     e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -213,7 +213,7 @@ public class LogonScreen extends Activity {
         s_password = password.getText().toString();
         realm = "";
         if (s_username.equals("") || s_password.equals("")) {
-            resultStatus(false, "Please provide your WiFi credentials from MySelfnet.");
+            resultStatus(false, getString(R.string.no_credentials_provided));
             return;
         }
 
@@ -368,7 +368,7 @@ public class LogonScreen extends Activity {
     protected void resultStatus(final boolean success, final String text) {
         Intent intent = new Intent(this, ResultScreen.class);
         intent.setAction(Intent.ACTION_VIEW);
-        intent.putExtra(ResultScreen.TITLE, success?"Success!":"ERROR!");
+        intent.putExtra(ResultScreen.TITLE, success?getString(R.string.success_title):getString(R.string.error_title));
         intent.putExtra(ResultScreen.DESC, text);
         startActivity(intent);
     }

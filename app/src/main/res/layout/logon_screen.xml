@@ -19,7 +19,7 @@
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:scaleType="fitCenter"
-        android:contentDescription="@string/LOGO"
+        android:contentDescription="@string/logo_alt_test"
         android:src="@drawable/logo"
         android:padding="0dp" />
 
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:autoLink="web"
         android:layout_marginTop="15dp"
-        android:text="@string/twitter" />
+        android:text="@string/selfnet_wlan_manual_url" />
 
     <TextView
         android:layout_marginTop="5dp"
@@ -38,7 +38,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:textAlignment="center"
-        android:text="@string/lkeystore" />
+        android:text="@string/screen_lock_hint" />
 
     <LinearLayout
         android:id="@+id/logindata"
@@ -53,7 +53,7 @@
             android:id="@+id/logintext"
             android:layout_width="313dp"
             android:layout_height="wrap_content"
-            android:text="@string/TITLE_LOGON"
+            android:text="@string/provide_selfnet_credentials"
             android:visibility="visible" />
 
         <TextView
@@ -63,7 +63,7 @@
             android:layout_marginTop="15dp"
             android:layout_weight="0.27"
             android:autoLink="web"
-            android:text="@string/myselfnet" />
+            android:text="@string/myselfnet_url" />
 
         <EditText
             android:id="@+id/username"
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:ems="10"
-            android:hint="@string/Username"
+            android:hint="@string/default_email_hint"
             android:inputType="textEmailAddress"
             android:padding="5dp">
 
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:ems="10"
-            android:hint="@string/Password"
+            android:hint="@string/password_hint"
             android:inputType="textPassword"
             android:padding="5dp" />
     </LinearLayout>
@@ -99,7 +99,7 @@
         android:textColor="#ffffff"
         android:padding="10dp"
         android:onClick="createConnectionEntryClick"
-        android:text="@string/Logon" />
+        android:text="@string/create_connection_entry_button" />
 
     <Space
         android:layout_width="wrap_content"
