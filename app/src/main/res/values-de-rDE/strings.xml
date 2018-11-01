@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="provide_selfnet_credentials">Bitte gib deine MySelfnet Anmeldedaten an</string>
+    <string name="password_hint">Dein MySelfnet Passwort</string>
+    <string name="create_connection_entry_button">Erstelle WLAN Eintrag</string>
+    <string name="screen_lock_hint">Hinweis: Wenn du kein Speerbildschirm hast weigert sich Android die Sicherheitseinstellungen zu speichern!</string>
+    <string name="ABOUT_TITLE">Über</string>
+    <string name="EXIT_TITLE">Beenden</string>
+    <string name="HELP_TITLE">Hilfe</string>
+    <string name="logo_alt_test">Selfnet Logo</string>
+    <string name="app_name">Selfnet WLAN Setup</string>
+    <string name="ABOUT_CONTENT">Diese kleine App erzeugt einen wlan verbindungs eintrag für das Selfnet WLAN.  Es fügt die richtige SSL CA und \"subject name match\" ein und ist damit ein wenig sicherer als wenn man es selbst erstellt.</string>
+    <string name="HELP_TEXT">Wenn du probleme beim Verbinden mit dem WLAN hast, dann überprüfe bitte ob du email und Passwort richtig eingetragen hast. Wenn das nicht der Fehler ist schreib uns einfach an <a href="mailto:support@selfnet.de">support@selfnet.de</a>.</string>
+    <string name="success_title">Erfolg!</string>
+    <string name="error_title">FEHLER!</string>
+    <string name="email_ends_with_whitespace">Am Ende der Mail Adresse sind Leerzeichen. Bitte entferne diese und versuche es erneut!</string>
+    <string name="success_explain_text">Du solltest jetzt einen neuen WLAN Eintrag mit den richtigen Sicherheits Einstellungen haben. \n\nWenn du immer noch Probleme beim Verbinden mit dem WLAN hast, dann prüfe bitte ob du deine Anmeldedaten richtig eingegeben hast. Diese Naricht bestätigt nur, dass das WLAN Profil richtig angelegt wurde nicht das deine Nutzerdaten richtig sind.</string>
+    <string name="error_explain_text">Etwas ist schief gelaufen: %s</string>
+    <string name="no_credentials_provided">Bitte gib deine Sefnet Daten ein!</string>
+</resources>
