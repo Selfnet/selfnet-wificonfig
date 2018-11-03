@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Selfnet WLAN Setup</string>
+	<string name="app_name">Selfnet Wi-Fi Setup</string>
 
 	<string name="provide_selfnet_credentials">Please provide your MySelfnet credentials</string>
 	<string name="myselfnet_url" translatable="false">https://my.selfnet.de</string>
@@ -11,19 +11,19 @@
 	<string name="selfnet_wlan_manual_url" translatable="false">https://www.selfnet.de/wlan-guide</string>
 
 
-	<string name="screen_lock_hint">Note: If you have no screen lock, Android refuses to store the security settings!</string>
+	<string name="screen_lock_hint">Note: If you have no screen lock, Android refuses to store the settings!</string>
 
 	<string name="ABOUT_TITLE">About</string>
 	<string name="EXIT_TITLE">Exit</string>
 	<string name="HELP_TITLE">Help</string>
 		
-	<string name="ABOUT_CONTENT">This small helper app creates a wlan connection entry for the Selfnet WLAN.  It configures the correct SSL CA and subject name match, making it a little more secure than a hand-created entry.</string>
-	<string name="HELP_TEXT">If you face any issues connecting to the WLAN please check whether you typed in your password and email address correctly. If this doesn\'t help contact <a href="mailto:support@selfnet.de">support@selfnet.de</a>.</string>
+	<string name="ABOUT_CONTENT">This small helper app creates a Wi-Fi connection entry for the Selfnet Wi-Fi. It configures the correct SSL CA and "subject name match", making it a little more secure than an entry created by hand.</string>
+	<string name="HELP_TEXT">If you face any issues connecting to the Wi-Fi please check whether you typed in your password and email address correctly. If this doesn\'t help contact <a href="mailto:support@selfnet.de">support@selfnet.de</a>.</string>
 	<string name="logo_alt_test">Selfnet Logo</string>
 	<string name="success_title">Success!</string>
 	<string name="error_title">ERROR!</string>
-	<string name="email_ends_with_whitespace">Email-Address ends with whitespace - Please change that</string>
-	<string name="success_explain_text">You should now have a wifi connection entry with correct security settings and certificate verification. \n\nIf you are facing problems to connect to the WiFi check whether you provided the correct credentials. This message only confirms that the profile has been created it doesn\'t validate you username and password.</string>
+	<string name="email_ends_with_whitespace">Email-address ends with whitespace - please change that</string>
+	<string name="success_explain_text">You should now have a Wi-Fi connection entry with the correct security settings and certificate verification. \n\nIf you are facing problems to connect to the Wi-Fi check whether you provided the correct credentials. This message only confirms that the profile has been created, it doesn\'t validate you username and password.</string>
 	<string name="error_explain_text">Something went wrong: %s</string>
-	<string name="no_credentials_provided">Please provide your WiFi credentials from MySelfnet.</string>
+	<string name="no_credentials_provided">Please provide your Wi-Fi credentials from MySelfnet.</string>
 </resources>
