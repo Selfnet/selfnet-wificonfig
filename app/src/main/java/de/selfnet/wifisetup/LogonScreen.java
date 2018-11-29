@@ -1,4 +1,5 @@
 /* Copyright 2013 Wilco Baan Hofman <wilco@baanhofman.nl>
+ * Copyright 2018 Erik Zeiske <erik@selfnet.de>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
