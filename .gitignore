@@ -125,3 +125,10 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/androidstudio
+
+# Folder that contains release apk
+release/
+
+# Ignore system specific gradle properties
+gradle.properties
+
