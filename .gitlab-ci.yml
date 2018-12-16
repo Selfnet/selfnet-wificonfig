@@ -10,7 +10,7 @@ stages:
 
 before_script:
   - mkdir -p vendor/apt
-  - apt -o dir::cache::archives="vendor/apt" update && apt install -o -o dir::cache::archives="vendor/apt" -y android-sdk android-sdk-platform-23 git libgradle-android-plugin-java
+  - apt -o dir::cache::archives="vendor/apt" update && apt install -o dir::cache::archives="vendor/apt" -y android-sdk android-sdk-platform-23 git libgradle-android-plugin-java
 
 BUILD:
   stage: build
