@@ -1,0 +1,22 @@
+image: debian:stretch
+
+cache:
+  paths:
+    - vendor/apt
+
+stages:
+  - build
+  - deploy
+
+before_script:
+  - mkdir -p vendor/apt
+  - apt -o dir::cache::archives="vendor/apt" update && apt install -o -o dir::cache::archives="vendor/apt" -y android-sdk android-sdk-platform-23 git libgradle-android-plugin-java
+
+BUILD:
+  stage: build
+  script: gradle build
+
+DEPLOY:
+  stage: deploy
+  script:
+    - echo -n "Do Deployment here"
