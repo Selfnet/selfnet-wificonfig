@@ -12,9 +12,13 @@ before_script:
   - mkdir -p vendor/apt
   - apt -o dir::cache::archives="vendor/apt" update && apt install -o dir::cache::archives="vendor/apt" -y android-sdk android-sdk-platform-23 git libgradle-android-plugin-java
 
-BUILD:
+debug:
   stage: build
-  script: gradle build
+  script: ./gradlew assembleDebug
+
+release:
+  stage: build
+  script: ./gradlew assembleRelease
 
 DEPLOY:
   stage: deploy
