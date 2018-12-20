@@ -15,13 +15,21 @@ before_script:
 
 debug:
   stage: build
+  only:
+    - branches
+  except:
+    - master
   script: ./gradlew assembleDebug
 
 release:
   stage: build
+  only:
+    - master
   script: ./gradlew assembleRelease
 
 DEPLOY:
   stage: deploy
+  only:
+    - master
   script:
     - echo -n "Do Deployment here"
