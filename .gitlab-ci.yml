@@ -8,7 +8,8 @@ stages:
   - build
   - deploy
 
-# before_script:
+before_script:
+    - cp gradle.propertiesBuildServer gradle.properties
 #   - mkdir -p vendor/apt
 #   - apt -o dir::cache::archives="vendor/apt" update && apt install -o dir::cache::archives="vendor/apt" -y android-sdk android-sdk-platform-23 git libgradle-android-plugin-java
 #   - export ANDROID_HOME=/usr/lib/android-sdk
