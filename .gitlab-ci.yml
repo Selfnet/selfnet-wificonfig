@@ -25,8 +25,6 @@ debug:
 
 release:
   stage: build
-  only:
-    - master
   script: ./gradlew assembleRelease
 
 deploy:
