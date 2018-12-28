@@ -1,4 +1,4 @@
-image: circleci/android:api-23
+image: circleci/android:api-26
 
 # cache:
 #   paths:
