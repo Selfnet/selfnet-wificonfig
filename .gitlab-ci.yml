@@ -26,6 +26,10 @@ debug:
 release:
   stage: build
   script: ./gradlew assembleRelease
+  artifacts:
+    name: "wifi-setup"
+    paths:
+      - app/build/outputs/apk/release/*.apk
 
 deploy:
   stage: deploy
