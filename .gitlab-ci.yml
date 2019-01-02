@@ -1,0 +1,33 @@
+image: circleci/android:api-26
+
+stages:
+  - build
+  - deploy
+
+before_script:
+    - cp gradle.propertiesBuildServer gradle.properties
+
+debug:
+  stage: build
+  only:
+    - branches
+  except:
+    - master
+  script: ./gradlew assembleDebug
+
+release:
+  stage: build
+  only:
+    - master
+  script: ./gradlew assembleRelease
+  artifacts:
+    name: "wifi-setup"
+    paths:
+      - app/build/outputs/apk/release/*.apk
+
+deploy:
+  stage: deploy
+  only:
+    - master
+  script:
+    - echo -n "Do Deployment here"

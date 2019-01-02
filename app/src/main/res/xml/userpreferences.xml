@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-	android:title="@string/TITLE_LOGON">
+	android:title="@string/provide_selfnet_credentials">
 	<PreferenceCategory android:title="SSID"
 		android:orderingFromXml="true">
 		<EditTextPreference android:key="Username"
-			android:summary="@string/Username" android:title="@string/Username"></EditTextPreference>
-		<EditTextPreference android:key="Password" android:summary="@string/Username" android:title="@string/Password"  android:password="true"></EditTextPreference>
+			android:summary="@string/default_email_hint" android:title="@string/default_email_hint"></EditTextPreference>
+		<EditTextPreference android:key="Password" android:summary="@string/default_email_hint" android:title="@string/password_hint"  android:password="true"></EditTextPreference>
 			
 </PreferenceCategory>
 </PreferenceScreen>

@@ -1,16 +1,25 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 23
-    buildToolsVersion '27.0.3'
+    signingConfigs {
+        release {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword System.getenv("RELEASE_STORE_PASSWORD")
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword System.getenv("RELEASE_KEY_PASSWORD")
+        }
+    }
+    compileSdkVersion 26
+    buildToolsVersion '28.0.3'
     defaultConfig {
-        applicationId "tf.nox.wifisetup"
+        applicationId "de.selfnet.wifisetup"
         minSdkVersion 23
-        targetSdkVersion 23
+        targetSdkVersion 26
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
         }
     }
     productFlavors {

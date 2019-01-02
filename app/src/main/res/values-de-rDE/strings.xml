@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="provide_selfnet_credentials">Gebe deine MySelfnet Anmeldedaten ein</string>
+    <string name="password_hint">Dein MySelfnet Passwort</string>
+    <string name="create_connection_entry_button">Erstelle WLAN-Konfiguration</string>
+    <string name="screen_lock_hint">Hinweis: Wenn du keinen Sperrbildschirm eingerichtet hast, kann Android die Einstellungen nicht speichern.</string>
+    <string name="ABOUT_TITLE">Über</string>
+    <string name="EXIT_TITLE">Beenden</string>
+    <string name="HELP_TITLE">Hilfe</string>
+    <string name="logo_alt_test">Selfnet Logo</string>
+    <string name="app_name">Selfnet WLAN Setup</string>
+    <string name="ABOUT_CONTENT">Diese Anwendung konfiguriert das Selfnet WLAN für dein Smartphone.</string>
+    <string name="HELP_TEXT">Wenn du Probleme beim Verbinden mit dem WLAN hast, überprüfe bitte ob du deine E-Mail Adresse und das Passwort richtig eingegeben hast. Wenn die Verbindung dann immernoch nicht klappt, schreib uns einfach an <a href="mailto:support@selfnet.de">support@selfnet.de</a>.</string>
+    <string name="success_title">Erfolg!</string>
+    <string name="error_title">FEHLER!</string>
+    <string name="email_ends_with_whitespace">Am Ende der E-Mail Adresse sind Leerzeichen. Bitte entferne diese und versuche es erneut.</string>
+    <string name="success_explain_text">Ein neuer WLAN-Eintrag mit den richtigen Sicherheitseinstellungen wurde angelegt.\n\nWenn du Probleme beim Verbinden mit dem WLAN hast, prüfe bitte, ob du deine Anmeldedaten richtig eingegeben hast. Diese Nachricht bestätigt nur, dass das WLAN-Profil angelegt wurde, nicht dass deine Nutzerdaten richtig sind.</string>
+    <string name="error_explain_text">Etwas ist schief gelaufen: %s</string>
+    <string name="no_credentials_provided">Bitte gebe deine MySelfnet Anmeldedaten ein.</string>
+</resources>

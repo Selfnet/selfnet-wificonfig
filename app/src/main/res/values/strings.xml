@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Selfnet WLAN Setup</string>
+	<string name="app_name">Selfnet Wi-Fi Setup</string>
 
-	<string name="TITLE_LOGON">Please provide your MySelfnet credentials</string>
-	<string name="myselfnet">https://my.selfnet.de</string>
-	<string name="Username">your@email.com</string>
-	<string name="Password">MySelfnet Password</string>
-	<string name="Logon">Create connection entry</string>
-	<string name="qrScan">Scan QRCode</string>
-
-	<string name="twitter">https://twitter.com/selfnet_ev</string>
-
-
-	<string name="lkeystore">Note: If you have no screen lock, Android refuses to store the security settings!</string>
+	<string name="provide_selfnet_credentials">Please provide your MySelfnet credentials</string>
+	<string name="myselfnet_url" translatable="false">https://my.selfnet.de</string>
+	<string name="default_email_hint" translatable="false">your@email.com</string>
+	<string name="password_hint">MySelfnet Password</string>
+	<string name="create_connection_entry_button">Create connection entry</string>
+	<string name="selfnet_wlan_manual_url" translatable="false">https://www.selfnet.de/wlan-guide</string>
+	<string name="screen_lock_hint">Note: When no lockscreen is set up, Android refuses to store the settings.</string>
 
 	<string name="ABOUT_TITLE">About</string>
 	<string name="EXIT_TITLE">Exit</string>
 	<string name="HELP_TITLE">Help</string>
-		
-	<string name="ABOUT_CONTENT">This small helper app creates a wlan connection entry for the Selfnet WLAN network.  It configures the correct SSL CA and subject name match, making it a little more secure than a hand-created entry.</string>
-	<string name="HELP_TEXT">If you face any issues connecting to the WLAN please check whether you typed in your password and email address correctly.\nIf this doesn\'t help contact <a href="mailto:support@selfnet.dem">support@selfnet.de</a>.</string>
-	<string name="LOGO">Selfnet Logo</string>
+
+	<string name="ABOUT_CONTENT">This application configures the Selfnet Wi-Fi for your smartphone.</string>
+	<string name="HELP_TEXT">If you face any issues connecting to the Wi-Fi please check whether your password and email address are entered correctly. If this doesn\'t help contact <a href="mailto:support@selfnet.de">support@selfnet.de</a>.</string>
+	<string name="logo_alt_test">Selfnet Logo</string>
+	<string name="success_title">Success!</string>
+	<string name="error_title">ERROR!</string>
+	<string name="email_ends_with_whitespace">Email address ends with whitespaces - please remove them.</string>
+	<string name="success_explain_text">A Wi-Fi connection entry with the correct security settings was created.\n\nIf you face problems connecting to the Selfnet Wi-Fi please check whether you\'ve provided the correct credentials. This message only confirms the profile\'s creation but doesn\'t validate you username and password.</string>
+	<string name="error_explain_text">Something went wrong: %s</string>
+	<string name="no_credentials_provided">Please provide your Wi-Fi credentials from MySelfnet.</string>
 </resources>
