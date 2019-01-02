@@ -1,4 +1,5 @@
 /* Copyright 2013 Wilco Baan Hofman <wilco@baanhofman.nl>
+ * Copyright 2018 Erik Zeiske <erik@selfnet.de>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +14,7 @@
  *  limitations under the License.
  */
 
-package tf.nox.wifisetup;
+package de.selfnet.wifisetup;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -21,7 +22,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.net.Uri;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiEnterpriseConfig.Eap;
@@ -37,9 +37,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import java.io.InputStream;
 import java.security.cert.CertificateFactory;
@@ -50,7 +48,7 @@ import java.util.List;
 /* import android.util.Base64; */
 // API level 18 and up
 
-public class WifiSetup extends Activity {
+public class LogonScreen extends Activity {
     // FIXME This should be a configuration setting somehow
     private static final String INT_EAP = "eap";
     private static final String INT_PHASE2 = "phase2";
@@ -66,6 +64,7 @@ public class WifiSetup extends Activity {
     private static final String INT_IDENTITY = "identity";
     private static final String INT_ANONYMOUS_IDENTITY = "anonymous@email.service";
     private static final String INT_ENTERPRISEFIELD_NAME = "android.net.wifi.WifiConfiguration$EnterpriseField";
+    private static final String INT_DOMAIN_SUFFIX_MATCH = "domain.suffix.match";
 
     // Because android.security.Credentials cannot be resolved...
     private static final String INT_KEYSTORE_URI = "keystore://";
@@ -80,8 +79,6 @@ public class WifiSetup extends Activity {
     private EditText password;
     private Button btn;
     private Button qrScan;
-    private String subject_match;
-    private String altsubject_match;
 
     private String realm = "@email.space";
     private String ssid;
@@ -90,8 +87,12 @@ public class WifiSetup extends Activity {
     private int logoclicks = 0;
     private String s_username;
     private String s_password;
-    private ViewFlipper flipper;
 
+    /**
+     * Creates a toast for the given text.
+     * If a toast is currently shown it gets replaced by this toast.
+     * @param text The text content of the toast
+     */
     private void toastText(final String text) {
         if (toast != null)
             toast.cancel();
@@ -109,17 +110,21 @@ public class WifiSetup extends Activity {
 	}
 	*/
 
-    // Called when the activity is first created.
+    /**
+     * Called when the activity is created.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.logon);
+        setContentView(R.layout.logon_screen);
 
-        flipper = (ViewFlipper) findViewById(R.id.viewflipper);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
+        btn = (Button) findViewById(R.id.button1);
 
         ImageView img = (ImageView) findViewById(R.id.logo);
+        //Easter egg for clicking on the logo
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,95 +137,56 @@ public class WifiSetup extends Activity {
                 }
             }
         });
-
-        qrScan = (Button) findViewById(R.id.qrScan);
-        if (qrScan == null)
-            throw new RuntimeException("button1 not found. Odd");
-        qrScan.setOnClickListener(new Button.OnClickListener() {
-                                     public void onClick(View _v) {
-                                          if (busy) {
-                                              return;
-                                          }
-                                          busy = true;
-                                          _v.setClickable(false);
-
-                                          try {
-                                              Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-                                              intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE for bar codes
-
-                                              startActivityForResult(intent, 0);
-
-                                          } catch (Exception e) {
-
-                                              Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
-                                              Intent marketIntent = new Intent(Intent.ACTION_VIEW,marketUri);
-                                              startActivity(marketIntent);
-                                          }
-                                      }
-                                  });
-
-        btn = (Button) findViewById(R.id.button1);
-        if (btn == null)
-            throw new RuntimeException("button1 not found. Odd");
-        btn.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View _v) {
-                if (busy) {
-                    return;
-                }
-
-                // Reject trailing whitespaces
-                if (username.getText().toString().endsWith(" ")) {
-                    toastText("Email-Address ends with whitespace - Please change that");
-                    return;
-                }
-
-                busy = true;
-                _v.setClickable(false);
-
-                // Most of this stuff runs in the background
-                Thread t = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            if (android.os.Build.VERSION.SDK_INT >= 18) {
-                                saveWifiConfig();
-                                resultStatus(true, "You should now have a wifi connection entry with correct security settings and certificate verification. \n\nIf you are facing problems to connect to the WiFi check whether you provided the correct credentials.\nThis message only confirms that the profile has been created it doesn't validate you username and password.");
-                                // Clear the password field in the UI thread
-                                /*
-                                mHandler.post(new Runnable() {
-									@Override
-									public void run() {
-										password.setText("");
-									};
-								});
-								*/
-                            } else {
-                                throw new RuntimeException("What version is this?! API Mismatch");
-                            }
-                        } catch (RuntimeException e) {
-                            resultStatus(false, "Something went wrong: " + e.getMessage());
-                            e.printStackTrace();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        busy = false;
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                btn.setClickable(true);
-                            }
-
-                            ;
-                        });
-                    }
-                };
-                t.start();
-
-            }
-        });
-
     }
 
+    /**
+     * Gets called by the button to create the connection entry
+     * @param _v the calling view
+     */
+    public void createConnectionEntryClick(View _v) {
+        if (busy) {
+            return;
+        }
+
+        // Reject trailing whitespaces
+        if (username.getText().toString().endsWith(" ")) {
+            toastText(getString(R.string.email_ends_with_whitespace));
+            return;
+        }
+
+        busy = true;
+        btn.setClickable(false);
+
+        // Most of this stuff runs in the background
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    saveWifiConfig();
+                    resultStatus(true, getString(R.string.success_explain_text));
+                } catch (RuntimeException e) {
+                    resultStatus(false, String.format(getString(R.string.error_explain_text), e.getMessage()));
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                busy = false;
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        btn.setClickable(true);
+                    }
+
+                    ;
+                });
+            }
+        };
+        t.start();
+    }
+
+    /**
+     * Sets the wifi config
+     */
     private void saveWifiConfig() {
         WifiManager wifiManager = (WifiManager) this.getSystemService(WIFI_SERVICE);
         wifiManager.setWifiEnabled(true);
@@ -238,14 +204,15 @@ public class WifiSetup extends Activity {
         }
 
         ssid = "Selfnet";
-        subject_match = "/CN=radius-user-2.server.selfnet.de";
-        altsubject_match = "DNS:radius-user.selfnet.de";
+        String subject_match = "/CN=radius-user-2.server.selfnet.de";
+        String altsubject_match = "DNS:radius-user.selfnet.de";
+        String domain_suffix_match = "radius-user.selfnet.de";
 
         s_username = username.getText().toString();
         s_password = password.getText().toString();
         realm = "";
         if (s_username.equals("") || s_password.equals("")) {
-            resultStatus(false, "Please provide your WiFi credentials from MySelfnet.");
+            resultStatus(false, getString(R.string.no_credentials_provided));
             return;
         }
 
@@ -301,6 +268,7 @@ public class WifiSetup extends Activity {
         configMap.put(INT_PHASE2, "auth=PAP");
         configMap.put(INT_ENGINE, "0");
         configMap.put(INT_CA_CERT, INT_CA_PREFIX);
+        configMap.put(INT_DOMAIN_SUFFIX_MATCH, domain_suffix_match);
 
         applyAndroid43EnterpriseSettings(currentConfig, configMap);
 
@@ -332,7 +300,7 @@ public class WifiSetup extends Activity {
             enterpriseConfig.setIdentity(s_username);
             enterpriseConfig.setPassword(s_password);
             enterpriseConfig.setAltSubjectMatch(configMap.get(INT_ALTSUBJECT_MATCH));
-            // enterpriseConfig.setSubjectMatch(configMap.get(INT_SUBJECT_MATCH));
+            enterpriseConfig.setDomainSuffixMatch(configMap.get(INT_DOMAIN_SUFFIX_MATCH));
             currentConfig.enterpriseConfig = enterpriseConfig;
 
         } catch (Exception e) {
@@ -340,23 +308,11 @@ public class WifiSetup extends Activity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
-
-            if (resultCode == RESULT_OK) {
-                String contents = data.getStringExtra("SCAN_RESULT");
-                String[] credentials = contents.split(":");
-                username.setText(credentials[0]);
-                password.setText(credentials[1]);
-            }
-            if(resultCode == RESULT_CANCELED){
-                toastText("Failed!");
-            }
-        }
-    }
-
+    /**
+     * Related to the menu on the top right corner
+     * @param menu the menu of this activity
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -364,6 +320,12 @@ public class WifiSetup extends Activity {
         return true;
     }
 
+    /**
+     * Gets called when there an options menu item is clicked.
+     * Will take the according actions
+     * @param item
+     * @return true if the event was processed by this function
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Builder builder = new AlertDialog.Builder(this);
@@ -398,31 +360,24 @@ public class WifiSetup extends Activity {
         return false;
     }
 
-
-    /* Update the status in the main thread */
+    /**
+     * Switches to the result screen displaying the given text
+     * @param success
+     * @param text
+     */
     protected void resultStatus(final boolean success, final String text) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                TextView res_title = (TextView) findViewById(R.id.resulttitle);
-                TextView res_text = (TextView) findViewById(R.id.result);
-
-                System.out.println(text);
-                res_text.setText(text);
-                if (success)
-                    res_title.setText("Success!");
-                else
-                    res_title.setText("ERROR!");
-
-                if (toast != null)
-                    toast.cancel();
-                /* toast = Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG);
-                toast.show(); */
-                flipper.showNext();
-            }
-        });
+        Intent intent = new Intent(this, ResultScreen.class);
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.putExtra(ResultScreen.TITLE, success?getString(R.string.success_title):getString(R.string.error_title));
+        intent.putExtra(ResultScreen.DESC, text);
+        startActivity(intent);
     }
 
+    /**
+     * removes the quotes from the given string if present
+     * @param str
+     * @return
+     */
     static String removeQuotes(String str) {
         int len = str.length();
         if ((len > 1) && (str.charAt(0) == '"') && (str.charAt(len - 1) == '"')) {
@@ -431,6 +386,11 @@ public class WifiSetup extends Activity {
         return str;
     }
 
+    /**
+     * Surrounds the given string with quotes
+     * @param string
+     * @return
+     */
     static String surroundWithQuotes(String string) {
         return "\"" + string + "\"";
     }
