@@ -1,0 +1,41 @@
+image: circleci/android:api-26
+
+# cache:
+#   paths:
+#     - vendor/apt
+
+stages:
+  - build
+  - deploy
+
+before_script:
+    - cp gradle.propertiesBuildServer gradle.properties
+#   - mkdir -p vendor/apt
+#   - apt -o dir::cache::archives="vendor/apt" update && apt install -o dir::cache::archives="vendor/apt" -y android-sdk android-sdk-platform-23 git libgradle-android-plugin-java
+#   - export ANDROID_HOME=/usr/lib/android-sdk
+#   - cp -f licenses/*-license /usr/lib/android-sdk/licenses/
+
+debug:
+  stage: build
+  only:
+    - branches
+  except:
+    - master
+  script: ./gradlew assembleDebug
+
+release:
+  stage: build
+  only:
+    - master
+  script: ./gradlew assembleRelease
+  artifacts:
+    name: "wifi-setup"
+    paths:
+      - app/build/outputs/apk/release/*.apk
+
+deploy:
+  stage: deploy
+  only:
+    - master
+  script:
+    - echo -n "Do Deployment here"
