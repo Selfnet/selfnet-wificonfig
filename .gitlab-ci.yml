@@ -25,6 +25,8 @@ debug:
 
 release:
   stage: build
+  only:
+    - master
   script: ./gradlew assembleRelease
   artifacts:
     name: "wifi-setup"
