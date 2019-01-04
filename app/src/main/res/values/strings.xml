@@ -14,13 +14,13 @@
 	<string name="EXIT_TITLE">Exit</string>
 	<string name="HELP_TITLE">Help</string>
 
-	<string name="ABOUT_CONTENT">This application configures the Selfnet Wi-Fi® for your smartphone.</string>
+	<string name="ABOUT_CONTENT">This application configures the Selfnet Wi-Fi for your smartphone.</string>
 	<string name="HELP_TEXT">If you face any issues connecting to the wireless LAN please check whether you typed in your password and email address correctly.\nIf this doesn\'t help contact <a href="mailto:support@selfnet.de">support@selfnet.de</a>.</string>
 	<string name="logo_alt_test">Selfnet Logo</string>
 	<string name="success_title">Success!</string>
 	<string name="error_title">ERROR!</string>
 	<string name="email_ends_with_whitespace">Email address ends with whitespaces - please remove them.</string>
-	<string name="success_explain_text">A Wi-Fi connection entry with the correct security settings was created.\n\nIf you face problems connecting to the Selfnet Wi-Fi® please check whether you\'ve provided the correct credentials. This message only confirms the profile\'s creation but doesn\'t validate you username and password.</string>
+	<string name="success_explain_text">A Wi-Fi connection entry with the correct security settings was created.\n\nIf you face problems connecting to the Selfnet Wi-Fi please check whether you\'ve provided the correct credentials. This message only confirms the profile\'s creation but doesn\'t validate you username and password.</string>
 	<string name="error_explain_text">Something went wrong: %s</string>
-	<string name="no_credentials_provided">Please provide your Wi-Fi® credentials from MySelfnet.</string>
+	<string name="no_credentials_provided">Please provide your Wi-Fi credentials from MySelfnet.</string>
 </resources>
