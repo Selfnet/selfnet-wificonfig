@@ -345,8 +345,12 @@ public class LogonScreen extends Activity {
                 return true;
             case R.id.help:
                 showDialog(getString(R.string.HELP_TITLE), getString(R.string.HELP_TEXT));
-
                 return true;
+
+            case R.id.privacy:
+                showDialog(getString(R.string.PRIVACY_TITLE), getString(R.string.PRIVACY_AGREEMENT));
+                return true;
+
             case R.id.exit:
                 System.exit(0);
         }

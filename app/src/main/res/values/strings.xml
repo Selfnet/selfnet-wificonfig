@@ -13,6 +13,8 @@
 	<string name="ABOUT_TITLE">About</string>
 	<string name="EXIT_TITLE">Exit</string>
 	<string name="HELP_TITLE">Help</string>
+	<string name="PRIVACY_TITLE">Privacy Agreement</string>
+	<string name="PRIVACY_AGREEMENT">This Privacy Policy clarifies the users of the \"Selfnet Wifi-Config\" app offered by \"Selfnet e.V. Allmandring 8a 70569 in Stuttgart\", hereinafter referred to as App, about the use of personal data in the App. Through the app, the email address and password for the services of the provider are collected and translated into a WiFi profile to access the provider\'s WiFi infrastructure on the user\'s smartphone. Apart from that, the data will not be transferred or stored by the app in any way.</string>
 
 	<string name="ABOUT_CONTENT">This application configures the Selfnet Wi-Fi for your smartphone.</string>
 	<string name="HELP_TEXT">If you face any issues connecting to the wireless LAN please check whether you typed in your password and email address correctly.\nIf this doesn\'t help contact <a href="mailto:support@selfnet.de">support@selfnet.de</a>.</string>
