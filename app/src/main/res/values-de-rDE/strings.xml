@@ -7,6 +7,8 @@
     <string name="ABOUT_TITLE">Über</string>
     <string name="EXIT_TITLE">Beenden</string>
     <string name="HELP_TITLE">Hilfe</string>
+    <string name="PRIVACY_TITLE">Datenschutzerklärung</string>
+    <string name="PRIVACY_AGREEMENT">Diese Datenschutzerklärung klärt die Nutzer der App \"Selfnet Wifi-Config\", angeboten von \"Selfnet e.V. Allmandring 8a 70569 in Stuttgart\", im Folgenden App genannt, über die Verwendung von personenbezogenen Daten in der App auf. Durch die App werden die E-Mail-Adresse und das Passwort für die Dienste des Anbieters erhoben und in der Form eines WLAN-Profils zum Zugriff auf die WLAN-Infrastruktur des Anbieters auf dem Smartphone des Nutzers übersetzt. Abgesehen davon werden die Daten durch die App in keinster Weise übertragen oder gespeichert.</string>
     <string name="logo_alt_test">Selfnet Logo</string>
     <string name="app_name">Selfnet WLAN Setup</string>
     <string name="ABOUT_CONTENT">Diese Anwendung konfiguriert das Selfnet WLAN für dein Smartphone.</string>
