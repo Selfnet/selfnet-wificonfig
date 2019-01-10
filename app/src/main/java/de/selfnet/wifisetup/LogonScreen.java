@@ -328,7 +328,6 @@ public class LogonScreen extends Activity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Builder builder = new AlertDialog.Builder(this);
         switch (item.getItemId()) {
             case R.id.about:
                 PackageInfo pi = null;
@@ -337,27 +336,33 @@ public class LogonScreen extends Activity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                builder.setTitle(getString(R.string.ABOUT_TITLE));
-                builder.setMessage(getString(R.string.ABOUT_CONTENT) +
+                showDialog( getString(R.string.ABOUT_TITLE),
+                        getString(R.string.ABOUT_CONTENT) +
                         "\n\n" + pi.packageName + "\n" +
                         "V" + pi.versionName +
                         "C" + pi.versionCode + "-equi");
-                builder.setPositiveButton(getString(android.R.string.ok), null);
-                builder.show();
 
                 return true;
             case R.id.help:
-                builder.setTitle(R.string.HELP_TITLE);
-                builder.setMessage(R.string.HELP_TEXT);
-
-                builder.setPositiveButton(getString(android.R.string.ok), null);
-                builder.show();
-
+                showDialog(getString(R.string.HELP_TITLE), getString(R.string.HELP_TEXT));
                 return true;
+
+            case R.id.privacy:
+                showDialog(getString(R.string.PRIVACY_TITLE), getString(R.string.PRIVACY_AGREEMENT));
+                return true;
+
             case R.id.exit:
                 System.exit(0);
         }
         return false;
+    }
+
+    private void showDialog(String title, String content){
+        Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(content);
+        builder.setPositiveButton(getString(android.R.string.ok), null);
+        builder.show();
     }
 
     /**
