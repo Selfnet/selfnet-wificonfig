@@ -2,5 +2,6 @@
     
     <item android:id="@+id/about" android:title="@string/ABOUT_TITLE"/>
     <item android:id="@+id/help" android:title="@string/HELP_TITLE" />
+    <item android:id="@+id/privacy" android:title="@string/PRIVACY_TITLE" />
     <item android:id="@+id/exit" android:title="@string/EXIT_TITLE"/>
 </menu>
