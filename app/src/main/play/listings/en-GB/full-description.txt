@@ -1,0 +1,8 @@
+This is the official App to configure the Selfnet WIFI for your device.
+
+Selfnet is a student association in the Stuttgart region. Our goal is to improve the knowledge transfer in topics related to network technology.
+
+If you have any questions, problems or remarks please do not hesitate to contact us via mail at support@selfnet.de.
+
+
+Privacy statement: https://www.selfnet.de/selfnet-app-datenschutz.html
