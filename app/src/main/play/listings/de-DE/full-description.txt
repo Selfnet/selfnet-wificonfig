@@ -1,0 +1,5 @@
+Dies ist die offizielle Anwendung um das Selfnet WLAN auf deinem Smartphone zu konfigurieren.
+
+Selfnet ist ein gemeinnütziger studentischer Verein im Raum Stuttgart, mit dem Zweck den Wissenstransfer im Bereich Informationstechnik zu fördern.
+
+Bei Fragen, Problemen oder Anmerkungen kannst du uns gerne jederzeit unter support@selfnet.de erreichen.
