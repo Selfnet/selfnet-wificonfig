@@ -11,9 +11,13 @@ A HowTo that describes how to manually configure your device can also be found o
 This App is based on the repository https://github.com/EventInfra/wifisetup/ which is based on https://github.com/eqvinox/wifisetup which is based on https://github.com/synnack/nikhef-eduroam
 
 # Download
-You can either download the Android Application directly from the Google Playstore:
 
-https://play.google.com/store/apps/details?id=de.selfnet.wifisetup
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/de.selfnet.wifisetup/)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
+     alt="Get it on Google Play"
+     height="80">](https://play.google.com/store/apps/details?id=de.selfnet.wifisetup)
 
 Or you can download the APKs from the GitHub Release page:
 
