@@ -10,6 +10,7 @@ A HowTo that describes how to manually configure your device can also be found o
 
 This App is based on the repository https://github.com/EventInfra/wifisetup/ which is based on https://github.com/eqvinox/wifisetup which is based on https://github.com/synnack/nikhef-eduroam
 
+
 # Download
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
@@ -28,11 +29,14 @@ https://github.com/Selfnet/selfnet-wificonfig/releases
 ![Screenshot German](/screenshots/screenshot-german.jpg)
 ![Screenshot English](/screenshots/screenshot-english.jpg)
 
+
 # License
 See [LICENSE](LICENSE).
+
 
 # Dataprotection foo
 
 While the Application itself does not communicate with any server it does create a profile on your Android device. Because of that the "Application" itself is legally seen as the provider itself (Selfnet e.V.) taking your input (username and password) we have tell you about data protection you can read here:
 
 https://www.selfnet.de/selfnet-app-datenschutz.html
+
