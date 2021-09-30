@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="de.selfnet.wifisetup" android:installLocation="auto" android:versionCode="4" android:versionName="1.1.3">
+      package="de.selfnet.wifisetup" android:installLocation="auto" android:versionCode="5" android:versionName="1.1.3">
     <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
     <uses-feature android:name="android.hardware.wifi" android:required="true"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
