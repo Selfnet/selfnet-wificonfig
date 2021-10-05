@@ -192,10 +192,11 @@ public class LogonScreen extends Activity {
 
         // Use the existing Selfnet profile if it exists.
         boolean ssidExists = false;
+        int oldNetworkId = -1;
         if (configs != null) {
             for (WifiConfiguration config : configs) {
-                if (config.SSID.equals(surroundWithQuotes(ssid))) {
-                    currentConfig = config;
+                if (config.SSID.equals(surroundWithQuotes(SSID))) {
+                    oldNetworkId = config.networkId;
                     ssidExists = true;
                     break;
                 }
@@ -231,13 +232,12 @@ public class LogonScreen extends Activity {
 
         currentConfig.enterpriseConfig = getAndroid43EnterpriseSettings();
 
-        if (!ssidExists) {
-            int networkId = wifiManager.addNetwork(currentConfig);
-            wifiManager.enableNetwork(networkId, false);
-        } else {
-            wifiManager.updateNetwork(currentConfig);
-            wifiManager.enableNetwork(currentConfig.networkId, false);
+        if (ssidExists) {
+            wifiManager.removeNetwork(oldNetworkId);
+            wifiManager.saveConfiguration();
         }
+        int networkId = wifiManager.addNetwork(currentConfig);
+        wifiManager.enableNetwork(networkId, false);
         wifiManager.saveConfiguration();
     }
 
