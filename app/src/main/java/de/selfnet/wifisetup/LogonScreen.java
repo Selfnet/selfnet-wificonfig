@@ -27,6 +27,7 @@ import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiEnterpriseConfig.Eap;
 import android.net.wifi.WifiEnterpriseConfig.Phase2;
 import android.net.wifi.WifiManager;
+import android.net.wifi.WifiNetworkSuggestion;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,8 +41,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -143,7 +146,12 @@ public class LogonScreen extends Activity {
                 try {
                     s_username = username.getText().toString();
                     s_password = password.getText().toString();
-                    saveWifiConfig();
+
+                    if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                        saveWifiConfigPreQ();
+                    } else {
+                        saveWifiConfigPostP();
+                    }
                     resultStatus(true, getString(R.string.success_explain_text));
                 } catch (RuntimeException e) {
                     resultStatus(false, String.format(getString(R.string.error_explain_text), e.getMessage()));
@@ -166,9 +174,10 @@ public class LogonScreen extends Activity {
     }
 
     /**
-     * Sets the wifi config
+     * Sets the wifi config before API Version 29
      */
-    private void saveWifiConfig() {
+    @TargetApi(Build.VERSION_CODES.P)
+    private void saveWifiConfigPreQ() {
         WifiManager wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
         wifiManager.setWifiEnabled(true);
 
@@ -265,6 +274,28 @@ public class LogonScreen extends Activity {
             e.printStackTrace();
             throw new RuntimeException("Couldn't create certificate for Enterprise Settings.");
         }
+    }
+
+    /**
+     * Save the the wifi configuration as suggestion for All API Versions since Q = 29
+     */
+    @TargetApi(Build.VERSION_CODES.Q)
+    private void saveWifiConfigPostP() {
+        WifiManager wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) { // Clear networks if possible
+            wifiManager.removeNetworkSuggestions(wifiManager.getNetworkSuggestions());
+        }
+
+        final WifiNetworkSuggestion suggestion =
+                new WifiNetworkSuggestion.Builder()
+                        .setSsid(SSID)
+                        .setIsHiddenSsid(HIDDEN_SSID)
+                        .setPriority(WLAN_PRIORITY)
+                        .setWpa2EnterpriseConfig(getAndroid43EnterpriseSettings())
+                        .build();
+        final List<WifiNetworkSuggestion> suggestionsList = new ArrayList<>();
+        suggestionsList.add(suggestion);
+        wifiManager.addNetworkSuggestions(suggestionsList);
     }
 
     /**
