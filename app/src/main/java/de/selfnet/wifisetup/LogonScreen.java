@@ -49,39 +49,18 @@ import java.util.List;
 // API level 18 and up
 
 public class LogonScreen extends Activity {
-    // FIXME This should be a configuration setting somehow
-    private static final String INT_EAP = "eap";
-    private static final String INT_PHASE2 = "phase2";
-    private static final String INT_ENGINE = "engine";
-    private static final String INT_ENGINE_ID = "engine_id";
-    private static final String INT_CLIENT_CERT = "client_cert";
-    private static final String INT_CA_CERT = "ca_cert";
-    private static final String INT_PRIVATE_KEY = "private_key";
-    private static final String INT_PRIVATE_KEY_ID = "key_id";
-    private static final String INT_SUBJECT_MATCH = "subject_match";
-    private static final String INT_ALTSUBJECT_MATCH = "altsubject_match";
-    private static final String INT_PASSWORD = "password";
-    private static final String INT_IDENTITY = "identity";
-    private static final String INT_ANONYMOUS_IDENTITY = "anonymous@email.service";
-    private static final String INT_ENTERPRISEFIELD_NAME = "android.net.wifi.WifiConfiguration$EnterpriseField";
-    private static final String INT_DOMAIN_SUFFIX_MATCH = "domain.suffix.match";
-
-    // Because android.security.Credentials cannot be resolved...
-    private static final String INT_KEYSTORE_URI = "keystore://";
-    private static final String INT_CA_PREFIX = INT_KEYSTORE_URI + "CACERT_";
-    private static final String INT_PRIVATE_KEY_PREFIX = INT_KEYSTORE_URI + "USRPKEY_";
-    private static final String INT_PRIVATE_KEY_ID_PREFIX = "USRPKEY_";
-    private static final String INT_CLIENT_CERT_PREFIX = INT_KEYSTORE_URI + "USRCERT_";
-
     protected static final int SHOW_PREFERENCES = 0;
     private Handler mHandler = new Handler();
     private EditText username;
     private EditText password;
     private Button btn;
     private Button qrScan;
-
-    private String realm = "@email.space";
-    private String ssid;
+    
+    private static final String SSID = "Selfnet";
+    private static final boolean HIDDEN_SSID = false;
+    private static final int WLAN_PRIORITY = 40;
+    private static final String ALTSUBJECT_MATCH = "DNS:radius-user.selfnet.de";
+    private static final String DOMAIN_SUFFIX_MATCH = "radius-user.selfnet.de";
     private boolean busy = false;
     private Toast toast = null;
     private int logoclicks = 0;
@@ -162,6 +141,8 @@ public class LogonScreen extends Activity {
             @Override
             public void run() {
                 try {
+                    s_username = username.getText().toString();
+                    s_password = password.getText().toString();
                     saveWifiConfig();
                     resultStatus(true, getString(R.string.success_explain_text));
                 } catch (RuntimeException e) {
@@ -188,7 +169,7 @@ public class LogonScreen extends Activity {
      * Sets the wifi config
      */
     private void saveWifiConfig() {
-        WifiManager wifiManager = (WifiManager) this.getSystemService(WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
         wifiManager.setWifiEnabled(true);
 
         WifiConfiguration currentConfig = new WifiConfiguration();
@@ -203,14 +184,6 @@ public class LogonScreen extends Activity {
             }
         }
 
-        ssid = "Selfnet";
-        String subject_match = "/CN=radius-user-2.server.selfnet.de";
-        String altsubject_match = "DNS:radius-user.selfnet.de";
-        String domain_suffix_match = "radius-user.selfnet.de";
-
-        s_username = username.getText().toString();
-        s_password = password.getText().toString();
-        realm = "";
         if (s_username.equals("") || s_password.equals("")) {
             resultStatus(false, getString(R.string.no_credentials_provided));
             return;
@@ -229,9 +202,9 @@ public class LogonScreen extends Activity {
             }
         }
 
-        currentConfig.SSID = surroundWithQuotes(ssid);
-        currentConfig.hiddenSSID = false;
-        currentConfig.priority = 40;
+        currentConfig.SSID = surroundWithQuotes(SSID);
+        currentConfig.hiddenSSID = HIDDEN_SSID;
+        currentConfig.priority = WLAN_PRIORITY;
         currentConfig.status = WifiConfiguration.Status.DISABLED;
 
         currentConfig.allowedKeyManagement.clear();
@@ -256,21 +229,7 @@ public class LogonScreen extends Activity {
         currentConfig.allowedProtocols.clear();
         currentConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
 
-
-        // Enterprise Settings
-        HashMap<String, String> configMap = new HashMap<>();
-        // configMap.put(INT_SUBJECT_MATCH, subject_match);
-        configMap.put(INT_ALTSUBJECT_MATCH, altsubject_match);
-        configMap.put(INT_ANONYMOUS_IDENTITY, "anonymous@email.service");
-        configMap.put(INT_IDENTITY, s_username);
-        configMap.put(INT_PASSWORD, s_password);
-        configMap.put(INT_EAP, "TTLS");
-        configMap.put(INT_PHASE2, "auth=PAP");
-        configMap.put(INT_ENGINE, "0");
-        configMap.put(INT_CA_CERT, INT_CA_PREFIX);
-        configMap.put(INT_DOMAIN_SUFFIX_MATCH, domain_suffix_match);
-
-        applyAndroid43EnterpriseSettings(currentConfig, configMap);
+        currentConfig.enterpriseConfig = getAndroid43EnterpriseSettings();
 
         if (!ssidExists) {
             int networkId = wifiManager.addNetwork(currentConfig);
@@ -284,7 +243,7 @@ public class LogonScreen extends Activity {
 
 
     @TargetApi(Build.VERSION_CODES.M)
-    private void applyAndroid43EnterpriseSettings(WifiConfiguration currentConfig, HashMap<String, String> configMap) {
+    private WifiEnterpriseConfig getAndroid43EnterpriseSettings() {
         try {
             CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
             InputStream in = getResources().openRawResource(R.raw.cacert);
@@ -293,18 +252,18 @@ public class LogonScreen extends Activity {
 
             WifiEnterpriseConfig enterpriseConfig = new WifiEnterpriseConfig();
             enterpriseConfig.setPhase2Method(Phase2.PAP);
-            enterpriseConfig.setAnonymousIdentity(configMap.get(INT_ANONYMOUS_IDENTITY));
+            enterpriseConfig.setAnonymousIdentity("anonymous@email.service");
             enterpriseConfig.setEapMethod(Eap.TTLS);
 
             enterpriseConfig.setCaCertificate(caCert);
             enterpriseConfig.setIdentity(s_username);
             enterpriseConfig.setPassword(s_password);
-            enterpriseConfig.setAltSubjectMatch(configMap.get(INT_ALTSUBJECT_MATCH));
-            enterpriseConfig.setDomainSuffixMatch(configMap.get(INT_DOMAIN_SUFFIX_MATCH));
-            currentConfig.enterpriseConfig = enterpriseConfig;
-
+            enterpriseConfig.setAltSubjectMatch(ALTSUBJECT_MATCH);
+            enterpriseConfig.setDomainSuffixMatch(DOMAIN_SUFFIX_MATCH);
+            return enterpriseConfig;
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Couldn't create certificate for Enterprise Settings.");
         }
     }
 
