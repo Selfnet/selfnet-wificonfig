@@ -31,6 +31,7 @@ import android.net.wifi.WifiNetworkSuggestion;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,6 +53,7 @@ import java.util.List;
 // API level 18 and up
 
 public class LogonScreen extends Activity {
+    private static final String TAG = "LogonScree";
     protected static final int SHOW_PREFERENCES = 0;
     private Handler mHandler = new Handler();
     private EditText username;
@@ -295,7 +297,8 @@ public class LogonScreen extends Activity {
                         .build();
         final List<WifiNetworkSuggestion> suggestionsList = new ArrayList<>();
         suggestionsList.add(suggestion);
-        wifiManager.addNetworkSuggestions(suggestionsList);
+        int status = wifiManager.addNetworkSuggestions(suggestionsList);
+        Log.i(TAG, "Adding network suggestion returned: " + status);
     }
 
     /**

@@ -8,12 +8,12 @@ android {
             keyPassword System.getenv("RELEASE_KEY_PASSWORD")
         }
     }
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion '30.0.0'
     defaultConfig {
         applicationId "de.selfnet.wifisetup"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
     }
     buildTypes {
         release {
